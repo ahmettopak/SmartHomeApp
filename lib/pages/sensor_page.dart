@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthomeui/util/smart_device_box.dart';
-import 'package:http/http.dart' as http;
 
 class SensorPage extends StatefulWidget {
   const SensorPage({super.key});
@@ -114,7 +113,7 @@ class _SensorPageState extends State<SensorPage> {
               Expanded(
                 child: GridView.builder(
                   itemCount: mySmartDevices.length,
-                  physics: const ScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthomeui/api/fetch_lamp.dart';
 import 'package:smarthomeui/pages/sensor_page.dart';
 import 'package:smarthomeui/util/smart_device_box.dart';
 import 'package:http/http.dart' as http;
+
+import '../constants/constants.dart';
+import '../model/lamp_model.dart';
 
 class DevicePage extends StatefulWidget {
   const DevicePage({super.key});
@@ -18,29 +22,55 @@ class _DevicePageState extends State<DevicePage> {
   final double verticalPadding = 25;
 
   // list of smart devices
-  List mySmartDevices = [
-    // [ smartDeviceName, iconPath , powerStatus ]
+  // List mySmartDevices = [
+  //   // [ smartDeviceName, iconPath , powerStatus ]
+  //   ["Smart Livingroom", "lib/icons/air-conditioner.png", false],
+  //   ["Balkon", "lib/icons/smart-tv.png", false],
+  //   ["Oturma odası", "lib/icons/fan.png", false],
+  // ];
 
-    ["Smart Livingroom", "lib/icons/air-conditioner.png", false],
-    ["Balkon", "lib/icons/smart-tv.png", false],
-    ["Oturma odası", "lib/icons/fan.png", false],
-  ];
+  List<Lamp> lamp = [];
+  @override
+  void initState() {
+    super.initState();
+    _fetchLamp();
+  }
 
   // power button switched
   void powerSwitchChanged(bool value, int index) {
     setState(() {
-      mySmartDevices[index][2] = value;
-      Fluttertoast.showToast(
-          msg: mySmartDevices[index][0] +
-              " is " +
-              mySmartDevices[index][2].toString(),
-          toastLength: Toast.LENGTH_SHORT, // Toast mesajının gösterim süresi
-          gravity:
-              ToastGravity.BOTTOM, // Toast mesajının konumu (alt, üst, merkez)
-          backgroundColor: Colors.black, // Toast mesajının arkaplan rengi
-          textColor: Colors.white, // Toast mesajının yazı rengi
-          fontSize: 16.0 // Toast mesajının yazı boyutu
-          );
+      //mySmartDevices[index][2] = value;
+      final body = {
+        'name': lamp[index].name,
+        "status": value.toString(),
+      };
+      _sendData(value, body);
+    });
+  }
+
+  Future<void> _sendData(bool value, Object body) async {
+    final response = await http.post(Uri.parse(lampUpdateUrl), body: body);
+
+    // Fluttertoast.showToast(
+    //     msg: response.statusCode.toString(),
+    //     toastLength: Toast.LENGTH_SHORT, // Toast mesajının gösterim süresi
+    //     gravity:
+    //         ToastGravity.BOTTOM, // Toast mesajının konumu (alt, üst, merkez)
+    //     backgroundColor: Colors.black, // Toast mesajının arkaplan rengi
+    //     textColor: Colors.white, // Toast mesajının yazı rengi
+    //     fontSize: 16.0 // Toast mesajının yazı boyutu
+    //     );
+
+    _fetchLamp();
+  }
+
+  Future<void> _fetchLamp() async {
+    final fetchedLamp = await fetchLamp();
+    setState(() {
+      lamp = fetchedLamp;
+      // Fluttertoast.showToast(
+      //   msg: lamp.length.toString(),
+      // );
     });
   }
 
@@ -98,14 +128,13 @@ class _DevicePageState extends State<DevicePage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 25),
 
               // smart devices grid
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Text(
-                  "Devices",
+                  "Lamp",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -114,11 +143,10 @@ class _DevicePageState extends State<DevicePage> {
                 ),
               ),
 
-              // grid
               Expanded(
                 child: GridView.builder(
-                  itemCount: mySmartDevices.length,
-                  physics: const ScrollPhysics(),
+                  itemCount: lamp.length,
+                  physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -126,9 +154,9 @@ class _DevicePageState extends State<DevicePage> {
                   ),
                   itemBuilder: (context, index) {
                     return SmartDeviceBox(
-                      smartDeviceName: mySmartDevices[index][0],
-                      iconPath: mySmartDevices[index][1],
-                      powerOn: mySmartDevices[index][2],
+                      smartDeviceName: lamp[index].name,
+                      iconPath: "lib/icons/smart-tv.png",
+                      powerOn: lamp[index].status,
                       onChanged: (value) => powerSwitchChanged(value, index),
                     );
                   },
