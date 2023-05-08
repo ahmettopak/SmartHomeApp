@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Lamp {
   final String name;
   final bool status;

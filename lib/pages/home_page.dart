@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smarthomeui/pages/about_page.dart';
-import 'package:smarthomeui/pages/device_page.dart';
+import 'package:smarthomeui/pages/lamp_page.dart';
 import 'package:smarthomeui/pages/sensor_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,12 +15,12 @@ class _HomePageState extends State<HomePage> {
   final double horizontalPadding = 40;
   final double verticalPadding = 25;
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   final List<Widget> _pages = [
-    DevicePage(),
-    AboutPage(),
-    SensorPage(),
+    const LampPage(),
+    const AboutPage(),
+    const SensorPage(),
   ];
 
   void _onItemTapped(int index) {

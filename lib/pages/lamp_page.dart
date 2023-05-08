@@ -2,25 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthomeui/api/fetch_lamp.dart';
-import 'package:smarthomeui/pages/sensor_page.dart';
 import 'package:smarthomeui/util/smart_device_box.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/constants.dart';
 import '../model/lamp_model.dart';
 
-class DevicePage extends StatefulWidget {
-  const DevicePage({super.key});
+class LampPage extends StatefulWidget {
+  const LampPage({super.key});
 
   @override
-  State<DevicePage> createState() => _DevicePageState();
+  State<LampPage> createState() => _LampPageState();
 }
 
-class _DevicePageState extends State<DevicePage> {
-  // padding constants
-  final double horizontalPadding = 40;
-  final double verticalPadding = 25;
-
+class _LampPageState extends State<LampPage> {
   // list of smart devices
   // List mySmartDevices = [
   //   // [ smartDeviceName, iconPath , powerStatus ]
@@ -33,6 +28,7 @@ class _DevicePageState extends State<DevicePage> {
   @override
   void initState() {
     super.initState();
+
     _fetchLamp();
   }
 
