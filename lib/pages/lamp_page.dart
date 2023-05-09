@@ -82,7 +82,7 @@ class _LampPageState extends State<LampPage> {
             children: [
               // app bar
               Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: horizontalPadding,
                   vertical: verticalPadding,
                 ),
@@ -108,7 +108,8 @@ class _LampPageState extends State<LampPage> {
 
               // welcome home
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -128,7 +129,8 @@ class _LampPageState extends State<LampPage> {
 
               // smart devices grid
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Text(
                   "Lamp",
                   style: TextStyle(

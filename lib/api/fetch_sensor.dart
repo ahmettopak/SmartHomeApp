@@ -8,7 +8,7 @@ import 'package:smarthomeui/model/sensor_model.dart';
 
 Future<List<Sensor>> fetchSensor() async {
   try {
-    final response = await http.get(Uri.parse(lampGetUrl));
+    final response = await http.get(Uri.parse(sensorGetUrl));
     if (response.statusCode == 200) {
       final jsonList = json.decode(response.body) as List<dynamic>;
       return jsonList.map((json) => Sensor.fromJson(json)).toList();

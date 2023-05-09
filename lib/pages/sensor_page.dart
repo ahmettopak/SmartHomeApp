@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smarthomeui/model/sensor_model.dart';
 import 'package:smarthomeui/util/percent_sensor.dart';
 import '../api/fetch_sensor.dart';
@@ -13,11 +16,44 @@ class SensorPage extends StatefulWidget {
 
 class _SensorPageState extends State<SensorPage> {
   List<Sensor> sensor = [];
-
+  late Timer _timer;
   @override
   void initState() {
     super.initState();
     _fetchSensor();
+    _startTimer();
+    // try {
+    //   Timer.periodic(const Duration(seconds: 30), (timer) {
+
+    //   });
+    // } catch (e) {}
+  }
+
+  @override
+  void dispose() {
+    _stopTimer();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      if (mounted) {
+        setState(() {
+          _fetchSensor();
+          Fluttertoast.showToast(
+            msg: "Sensor data refresh",
+          );
+        });
+      } else {
+        _stopTimer();
+      }
+    });
+  }
+
+  void _stopTimer() {
+    if (_timer != null) {
+      _timer.cancel();
+    }
   }
 
   List mySensors = [
@@ -87,18 +123,18 @@ class _SensorPageState extends State<SensorPage> {
 
             Expanded(
               child: GridView.builder(
-                itemCount: mySensors.length,
+                itemCount: sensor.length,
                 physics: const ScrollPhysics(),
                 padding:
                     const EdgeInsets.symmetric(horizontal: horizontalPadding),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.3,
+                  childAspectRatio: 1 / 1.4,
                 ),
                 itemBuilder: (context, index) {
                   return PercentSensor(
-                    sensorName: mySensors[index][0],
-                    value: mySensors[index][1],
+                    sensorName: sensor[index].name,
+                    value: sensor[index].value,
                   );
                 },
               ),
