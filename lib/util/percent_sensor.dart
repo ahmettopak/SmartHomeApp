@@ -58,8 +58,7 @@ class PercentSensor extends StatelessWidget {
         enableLoadingAnimation: true,
         title: GaugeTitle(
             text: sensorName,
-            textStyle:
-                const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            textStyle: const TextStyle(fontSize: 20, letterSpacing: 1.5)),
       ),
     );
   }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthomeui/api/fetch_lamp.dart';
+import 'package:smarthomeui/util/app_bar.dart';
 import 'package:smarthomeui/util/smart_device_box.dart';
 import 'package:http/http.dart' as http;
+import 'package:smarthomeui/util/title.dart';
 
 import '../constants/constants.dart';
 import '../model/lamp_model.dart';
@@ -74,94 +76,40 @@ class _LampPageState extends State<LampPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // app bar
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: verticalPadding,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // menu icon
-                    Image.asset(
-                      'lib/icons/menu.png',
-                      height: 45,
-                      color: Colors.grey[800],
-                    ),
-                    // account icon
-                    Icon(
-                      Icons.person,
-                      size: 45,
-                      color: Colors.grey[800],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const MyAppBar(),
+            const SizedBox(height: 25),
 
-              // welcome home
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Welcome Home,",
-                      style:
-                          TextStyle(fontSize: 20, color: Colors.grey.shade800),
-                    ),
-                    Text(
-                      'Ahmet Topak',
-                      style: GoogleFonts.bebasNeue(fontSize: 40),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 25),
+            // smart devices grid
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: MyTitle(text: "Lamp"),
+            ),
 
-              // smart devices grid
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Text(
-                  "Lamp",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                    color: Colors.grey.shade800,
-                  ),
+            Expanded(
+              child: GridView.builder(
+                itemCount: lamp.length,
+                physics: const ScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.3,
                 ),
+                itemBuilder: (context, index) {
+                  return SmartDeviceBox(
+                    smartDeviceName: lamp[index].name,
+                    iconPath: "lib/icons/light-bulb.png",
+                    powerOn: lamp[index].status,
+                    onChanged: (value) => powerSwitchChanged(value, index),
+                  );
+                },
               ),
-
-              Expanded(
-                child: GridView.builder(
-                  itemCount: lamp.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 1.3,
-                  ),
-                  itemBuilder: (context, index) {
-                    return SmartDeviceBox(
-                      smartDeviceName: lamp[index].name,
-                      iconPath: "lib/icons/smart-tv.png",
-                      powerOn: lamp[index].status,
-                      onChanged: (value) => powerSwitchChanged(value, index),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SmartDeviceBox extends StatelessWidget {
   final String smartDeviceName;
@@ -48,7 +47,7 @@ class SmartDeviceBox extends StatelessWidget {
                       child: Text(
                         smartDeviceName,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.5,
                           fontSize: 20,
                           color: powerOn ? Colors.white : Colors.black,
                         ),

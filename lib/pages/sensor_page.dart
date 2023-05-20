@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smarthomeui/model/sensor_model.dart';
+import 'package:smarthomeui/util/app_bar.dart';
 import 'package:smarthomeui/util/percent_sensor.dart';
+import 'package:smarthomeui/util/title.dart';
 import '../api/fetch_sensor.dart';
 import '../constants/constants.dart';
 
@@ -81,45 +83,14 @@ class _SensorPageState extends State<SensorPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // app bar
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: horizontalPadding,
-                vertical: verticalPadding,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // menu icon
-                  Image.asset(
-                    'lib/icons/menu.png',
-                    height: 45,
-                    color: Colors.grey[800],
-                  ),
-                  // account icon
-                  Icon(
-                    Icons.person,
-                    size: 45,
-                    color: Colors.grey[800],
-                  )
-                ],
-              ),
-            ),
+            const MyAppBar(),
             const SizedBox(height: 20),
 
             // smart devices grid
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: horizontalPadding),
-              child: Text(
-                "Sensor",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  color: Colors.grey.shade800,
-                ),
-              ),
-            ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
+                child: MyTitle(text: "Sensor")),
 
             Expanded(
               child: GridView.builder(
