@@ -1,6 +1,6 @@
-# MODERN SMART HOME x FLUTTER
-<br/>
-Real-Time Smart Home Application: Take Control of Your Home with a Touch!
+## MODERN SMART HOME x FLUTTER
+
+## Real-Time Smart Home Application: Take Control of Your Home with a Touch!
 
 The Real-Time Smart Home Application, developed using Flutter, transforms your home into a smart living space, making your daily life easier. This innovative app integrates with an API and an Arduino-based control unit, allowing you to remotely control electrical devices in your home and monitor sensor data in real time.
 
