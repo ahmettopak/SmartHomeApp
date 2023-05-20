@@ -1,4 +1,6 @@
 # MODERN SMART HOME x FLUTTER
 
-![Project Image](images\sensor_page.png)
-![Project Image](images\lamp_page.png)
+<div style="display: flex;">
+  <img src="images/lamp_page.png" alt="Project image" style="width: 50%;">
+  <img src="images/sensor_page.png" alt="Project image" style="width: 50%;">
+</div>
